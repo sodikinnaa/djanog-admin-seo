@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Artikel</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        button {
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            padding: 10px !important;
+            text-align: left;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        .fak-modal {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <a href="/">Home</a>
+        <a href="http://192.168.1.161">Rekap Sitasi</a>
+        <br>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h1>Daftar Artikel</h1>
+                <button onclick="enablemanual()">Add Artikel</button>
+
+            <button onclick="enalbemodal()">Add file txt</button>
+            <a href="javascript:window.history.go(-1);">Kembali</a>
+            <script>
+                function enablemanual(){
+                    manual = document.getElementById('add-manual')
+                    modal = document.getElementById('getmodal')
+                    if (manual.style.display == "none") {
+                        manual.style.display = "block";
+                    } else {
+                        manual.style.display = "none";
+                    }
+                    if (modal.style.display == "block") {
+                        modal.style.display = "none";
+                    } 
+
+                }
+                function enalbemodal() {
+                    manual = document.getElementById('add-manual')
+                    modal = document.getElementById('getmodal')
+
+                    if (modal.style.display == "none") {
+                        modal.style.display = "block";
+                    } else {
+                        modal.style.display = "none";
+                    }
+
+                    if (manual.style.display=="block"){
+                        manual.style.display="none"
+                    }
+
+
+                }
+            </script>
+            <div class="fak-modal" id="add-manual" style="display: none;">
+                <form action="/postdataArtikel/{{ id_website }}" method="post">
+                    {% csrf_token %}
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><label for="id_artikel">Id Artikel:</label></td>
+                                <td><input type="text" id="id_artikel" name="id_artikel" disabled value="{{ id_artikel }}"></td>
+                            </tr>
+                            <tr>
+                                <td><label for="title_artikel">Judul Artikel:</label></td>
+                                <td><input type="text" id="title_artikel" name="title_artikel" required=""></td>
+                            </tr>
+                            <tr>
+                                <td><label for="meta_artikel">Meta Deskrisi Artikel:</label></td>
+                                <td><textarea name="meta_artikel" id="meta_artikel"></textarea></td>
+                            </tr>
+                            
+
+                            <tr>
+                                <td><button type="submit">Update</button></td>
+                                <td><a href="javascript:window.history.go(-1);">Kembali</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+            <div class="fak-modal" id="getmodal" style="display: none;">
+                <h1>Upload file </h1>
+                <form action="/postdataArtikel/{{ id_website }}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <table width="20%">
+                        <tr>
+                            <td><label for="id_artikel">Id Artikel:</label></td>
+                            <td><input type="text" id="id_artikel" name="id_artikel" disabled value="{{ id_artikel }}"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="fileTXT">File:</label>
+                            </td>
+                            <td>
+                                <input type="file" class="form-control" name="fileTXT" id="fileTXT" accept=".txt">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="master_artikel">Pilih Master: *</label>
+                            </td>
+                            
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <input type="submit" value="Kirim ">
+                            </td>
+                        </tr>
+                    </table>
+                    <p>Master dapat ditambahkan di menu Master</p>
+
+
+
+                </form>
+            </div>
+            <table border="1px">
+                <tr>
+                    <th>No</th>
+                    <!-- <th>Nama</th>
+                    <th>Total Artikel</th> -->
+                    <th>Judul Artikel</th>
+                    <th>Url Artikel</th>
+                    <th>Meta Description</th>
+                    <th>action</th>
+                </tr>
+                {% for item in content %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td class="left">{{ item.title_artikel }}</td>
+                    <td class="left"><a
+                            href="https://{{ item.url_website }}/artikel/{{ item.link_artikel }}">{{item.link_artikel
+                            }}</a></td>
+                    <td class="left">{{ item.meta_description }}</td>
+                    <td>
+                        <a href="/editwebsite/{{ item.id_website }}">Edit</a>
+                        <a href="#">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <!-- modal artikel uplaod file -->
+    <style>
+        .modal {
+            align-items: center;
+            z-index: 100;
+            width: 100%;
+            display: none;
+        }
+    </style>
+
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        button{
+            margin-bottom: 10px;
+        }
+        table{
+            width: 50%;
+            text-align: center;
+        }
+        .left{
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/">Home</a>
+        <a href="http://192.168.1.161">Rekap Sitasi</a>
+        <br>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h1>Daftar Website</h1><a href="/addWebsite"><button>Add Website</button></a> <a href="javascript:window.history.go(-1);">Kembali</a>
+            <table border="1px">
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Url Website</th>
+                    <th>Total Artikel</th>
+                    <th>action</th>
+                </tr>
+                {% for item in content %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td class="left"><a href="/artikel/{{ item.id_website }}">{{ item.nm_website }}</a></td>
+                    <td class="left"><a href="https://{{ item.url_website }}" target="_blank">{{ item.url_website }}</a></td>
+                    <td>{{ item.total_artikel }}</td>
+                    <td>
+                        <a href="/editwebsite/{{ item.id_website }}"">Edit</a>
+                        <a href="#" onclick="showdata({{ item.id_website }})">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                <div class="modal" id="shwmodal">
+                    <div class="modal-content">
+                        <span class="close" onclick="showdata()">&times;</span>
+                        <p>Hapus Master..</p>
+                        <button id="url-data" onclick="deletedata()">ya</button> <button id="btndelete" onclick="showdata()">Tidak</button>
+                    </div>
+                </div>
+                <script>
+                    function deletedata(){
+                        buton = document.getElementById('url-data')
+                        id_website = buton.getAttribute('data-id')
+                        ednpoint = "/deletewebsite/"+id_website
+                        window.location.href = ednpoint;
+                    }
+                    function showdata(id_master){
+                        hapus = document.getElementById('url-data')                        
+                        modal = document.getElementById('shwmodal')
+                        hapus.setAttribute('data-id', id_master)
+                        if(modal.style.display == "none"){
+                            modal.style.display="none"
+                            console.log('block')
+                        }else{
+                            modal.style.display="block"
+                            console.log('none')
+
+                        }
+                    }
+                </script>
+            </table>
+        </div>
+    </div>
+
+    <!-- uplaod data artikel -->
+    
+</body>
+</html>

@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+   
+</head>
+
+<body>
+    <div class="nav">
+        <a href="/">Home</a>
+        <a href="http://192.168.1.161">Rekap Sitasi</a>
+        <br>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h1>Edit Artikel</h1>
+            <form action="/addartikel" method="get">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><label for="nama_artikel">Judul Artikel:</label></td>
+                            <td><input type="text" id="nama_artikel" name="nama_artikel"
+                                     required=""></td>
+                        </tr>
+                        <tr>
+                            <td><label for="url_artikel">URL Artikel:</label></td>
+                            <td><input type="text" id="url_artikel" name="url_artikel" required=""></td>
+                        </tr>
+                        <tr>
+                            <td><label for="meta_artikel">Meta Deskrisi Artikel:</label></td>
+                            <td><textarea name="meta_artikel" id="meta_artikel"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><label for="master_artikel">Master</label></td>
+                            <td>
+                                <select name="master_artikel" id="master_artikel">
+                                    <option value="1">Datadebasa</option>
+                                    <option value="2">Teknokrat</option>
+                                </select>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td><button type="submit">Update</button></td>
+                            <td><a href="javascript:window.history.go(-1);">Kembali</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+
+        </div>
+    </div>
+</body>
+
+</html>

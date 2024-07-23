@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+   
+</head>
+
+<body>
+    <div class="nav">
+        <a href="/">Home</a>
+        <a href="http://192.168.1.161">Rekap Sitasi</a>
+        <br>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h1>Add master</h1>
+            <form action="" method="post">
+                {% csrf_token %}
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><label for="nama_master">Nama Master:</label></td>
+                            <td><input type="text" id="nama_master" name="nama_master"
+                                    required=""></td>
+                        </tr>
+                        <tr>
+                            <td><label for="url_master">URL Redirect:</label></td>
+                            <td><input type="text" id="url_master" name="url_master" required=""></td>
+                        </tr>
+                        
+                        <tr>
+                            <td><button type="submit">Simpan Data</button></td>
+                            <td><a href="javascript:window.history.go(-1);">Kembali</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+
+        </div>
+    </div>
+</body>
+
+</html>

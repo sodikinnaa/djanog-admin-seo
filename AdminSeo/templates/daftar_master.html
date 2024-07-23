@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        button {
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 50%;
+        }
+
+        table tr td {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <a href="/">Home</a>
+        <a href="http://192.168.1.161">Rekap Sitasi</a>
+        <br>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h1>Daftar Master Redirect</h1><a href="/addMaster"><button>Add Master</button></a>
+            <table border="1px">
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>url-redirect</th>
+                    <th>action</th>
+                </tr>
+                {% for item in content %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="/website/{{ item.id_client }}">{{ item.nm_client }}</a></td>
+                    <td><a href="https://{{ item.url_client }}" target="_blank">{{ item.url_client }}</a></td>
+                    <td>
+                        <a href="/edit/{{ item.url_client }}">Edit</a>
+                        <a onclick="showmodal({{ item.id_client }})" href="#" data-id="{{ item.id_client }}">Delete</a>
+                    </td>
+                </tr>
+                
+                {% endfor %}
+                <div class="modal" id="shwmodal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <p>Hapus Master..</p>
+                        <button id="url-data" onclick="deletedata()">ya</button> <button id="btndelete" onclick="showmodal()">Tidak</button>
+                    </div>
+                </div>
+                <script>
+                    function deletedata(){
+                        var urlData = document.getElementById('url-data');
+                        data = urlData.getAttribute('data-id')
+                        id_master = data
+                        enpoint = "/deleteMaster/"+id_master
+                        
+                        window.location.href = enpoint;
+                    }
+                    function showmodal(id_master){
+                        modal = document.getElementById('shwmodal')
+                        var buttonDelete = document.getElementById('btndelete');
+                        // var urlData = document.getElementById('url-data').getAttribute('data-id');
+                        var urlData = document.getElementById('url-data');
+                        if(modal.style.display=="block" ){
+                            console.log('none '+id_master)
+                            data = modal.style.display="none"
+                            
+                        }else{
+                            data = modal.style.display="block"
+                            urlData.setAttribute('data-id', id_master);
+                        }
+                        
+                    }
+
+                </script>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

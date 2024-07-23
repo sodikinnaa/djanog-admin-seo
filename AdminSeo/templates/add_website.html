@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+   
+</head>
+
+<body>
+    <div class="nav">
+        <a href="/">Home</a>
+        <a href="http://192.168.1.161">Rekap Sitasi</a>
+        <br>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h1>Add Website</h1>
+            <form action="" method="post">
+                {% csrf_token %}
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><label for="nama_website">Nama Website:</label></td>
+                            <td><input type="text" id="nama_website" name="nama_website"
+                                    required=""></td>
+                        </tr>
+                        <tr>
+                            <td><label for="url_website">URL Website:</label></td>
+                            <td><input type="text" id="url_website" name="url_website" required=""></td>
+                        </tr>
+                        <tr>
+                            <td><label type="text" name="id_master">Master *</label></td>
+                            <td>
+                                <select name="id_master" id="id_master">
+                                    {% for client in content.client %}
+                                        <option value="{{ client.id_client }}">{{ client.nm_client }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td><button type="submit">Tamabahkan</button></td>
+                            <td><a href="javascript:window.history.go(-1);">Kembali</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>*Data Master di tambahkan di menu master <a href="/addMaster">Tanbahakan Master</a></p>
+            </form>
+
+        </div>
+    </div>
+</body>
+
+</html>
